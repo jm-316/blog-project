@@ -1,8 +1,7 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
-import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import ReactDOM from "react-dom/client";
+import React from "react";
+import App from "./App.tsx";
 import Home from "./pages/home/index.tsx";
 import PostPage from "./pages/posts/PostPage.tsx";
 import PostDetailPage from "./pages/posts/PostDetailPage.tsx";
@@ -12,6 +11,7 @@ import LoginPage from "./pages/login/index.tsx";
 import SignupPage from "./pages/signup/index.tsx";
 import NotFoundPage from "./pages/NotFound/index.tsx";
 import ProfilePage from "./pages/profile/index.tsx";
+import "./index.css";
 
 const router = createBrowserRouter([
   {
