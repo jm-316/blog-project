@@ -1,3 +1,20 @@
+.post__navigation {
+  max-width: 680px;
+  display: flex;
+  justify-content: space-around;
+  gap: 12px;
+  margin: 0 auto;
+  font-size: 16px;
+  padding: 48px 20px 0px 20px;
+  color: gray;
+  cursor: pointer;
+}
+
+.post__navigation__active {
+  color: black;
+  font-weight: 600;
+}
+
 .post__list {
   min-height: 90vh;
   max-width: 680px;
