@@ -1,16 +1,51 @@
 import { Link } from "react-router-dom";
 import styles from "./Home.module.css";
+import { useState } from "react";
 
-export default function Home() {
+interface PostListProps {
+  defaultTab?: TabType | CategoryType;
+}
+
+type TabType = "all" | "my";
+
+type CategoryType = "Frontend" | "Backend" | "web" | "Native";
+
+const CATEGORIES: CategoryType[] = ["Frontend", "Backend", "web", "Native"];
+
+export default function Home({ defaultTab = "all" }: PostListProps) {
+  const [activeTab, setActiveTab] = useState<TabType | CategoryType>(
+    defaultTab
+  );
+
   return (
     <>
-      <div>
-        <div>전체보기</div>
-        <div>나의 글</div>
+      <div className={styles.post__navigation}>
+        <div
+          onClick={() => setActiveTab("all")}
+          className={
+            activeTab === "all" ? styles.post__navigation__active : ""
+          }>
+          전체보기
+        </div>
+        <div
+          onClick={() => setActiveTab("my")}
+          className={activeTab === "my" ? styles.post__navigation__active : ""}>
+          나의 글
+        </div>
+        {CATEGORIES.map((category) => (
+          <div
+            key={category}
+            onClick={() => setActiveTab(category)}
+            className={
+              activeTab === category ? styles.post__navigation__active : ""
+            }>
+            {category}
+          </div>
+        ))}
       </div>
       <div className={styles.post__list}>
         {[...Array(10)].map((post, index) => (
-          <div className={styles.post__box}>
+          <div className={styles.post__box} key={index}>
             <div className={styles.post__box__header}>
               <Link to={`/posts/${index}`}>
                 <div className={styles.post__profile__box}>
