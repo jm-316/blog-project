@@ -62,3 +62,7 @@
 .form__btn:focus {
   background-color: #1945a4;
 }
+
+.form__error {
+  color: red;
+}
