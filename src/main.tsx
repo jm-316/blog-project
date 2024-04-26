@@ -12,6 +12,8 @@ import SignupPage from "./pages/signup/index.tsx";
 import NotFoundPage from "./pages/NotFound/index.tsx";
 import ProfilePage from "./pages/profile/index.tsx";
 import "./index.css";
+import { AuthContextProvider } from "./context/AuthContext.tsx";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute.tsx";
 
 const router = createBrowserRouter([
   {
@@ -20,11 +22,42 @@ const router = createBrowserRouter([
     errorElement: <NotFoundPage />,
     children: [
       { index: true, element: <Home /> },
-      { path: "profile", element: <ProfilePage /> },
-      { path: "posts", element: <PostPage /> },
-      { path: "posts/:id", element: <PostDetailPage /> },
-      { path: "posts/new", element: <PostNewPage /> },
-      { path: "posts/edit/:id", element: <PostEditPage /> },
+      {
+        path: "profile",
+        element: (
+          <ProtectedRoute>
+            <ProfilePage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "posts",
+        element: (
+          <ProtectedRoute>
+            <PostPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "posts/:id",
+        element: <PostDetailPage />,
+      },
+      {
+        path: "posts/new",
+        element: (
+          <ProtectedRoute>
+            <PostNewPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "posts/edit/:id",
+        element: (
+          <ProtectedRoute>
+            <PostEditPage />
+          </ProtectedRoute>
+        ),
+      },
       { path: "/login", element: <LoginPage /> },
       { path: "/signup", element: <SignupPage /> },
     ],
@@ -33,6 +66,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthContextProvider>
+      <RouterProvider router={router} />
+    </AuthContextProvider>
   </React.StrictMode>
 );
