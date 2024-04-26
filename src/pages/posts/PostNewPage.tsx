@@ -1,3 +1,5 @@
+import PostForm from "../../components/PostForm/PostForm";
+
 export default function PostNewPage() {
-  return <div>New</div>;
+  return <PostForm />;
 }

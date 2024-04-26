@@ -5,3 +5,10 @@ export interface PostListProps {
 export type TabType = "all" | "my";
 
 export type CategoryType = "자유게시판" | "Frontend" | "Backend" | "web";
+
+export const CATEGORIES: CategoryType[] = [
+  "자유게시판",
+  "Frontend",
+  "Backend",
+  "web",
+];
