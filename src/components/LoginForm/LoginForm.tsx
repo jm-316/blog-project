@@ -1,5 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
+import { app } from "../../firebaseApp";
 import styles from "./LoginForm.module.css";
 
 export default function LoginForm() {
@@ -37,10 +39,17 @@ export default function LoginForm() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    navigate("/");
+    try {
+      const auth = getAuth(app);
+
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
