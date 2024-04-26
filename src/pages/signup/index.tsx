@@ -1,3 +1,5 @@
+import LoginForm from "../../components/LoginForm/LoginForm";
+
 export default function SignupPage() {
-  return <div>SignupPage</div>;
+  return <LoginForm isSignup={true} />;
 }
