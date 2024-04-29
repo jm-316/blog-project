@@ -1,14 +1,24 @@
 import { useEffect, useState } from "react";
 import styles from "./PostDetail.module.css";
 import { PostProps } from "../../typings/post.types";
-import { useParams } from "react-router";
-import { getPost } from "../../firebaseApp";
+import { useNavigate, useParams } from "react-router";
+import { deletePost, getPost } from "../../firebaseApp";
 import { Link } from "react-router-dom";
 
 export default function PostDetail() {
   const [post, setPost] = useState<PostProps | null>(null);
 
   const params = useParams();
+  const navigate = useNavigate();
+
+  const handleDelete = async (id: string) => {
+    const confirm = window.confirm("해당 게시글을 삭제 하시겠습니까?");
+
+    if (confirm && id) {
+      deletePost(id);
+      navigate("/");
+    }
+  };
 
   useEffect(() => {
     if (params?.id) getPost(params?.id, setPost);
@@ -27,7 +37,11 @@ export default function PostDetail() {
       <div className={styles.post__utils__box}>
         <div className={styles.post__category}>{post?.category}</div>
         <div className={styles.post__edit__box}>
-          <div className={styles.post__delete}>delete</div>
+          <div
+            className={styles.post__delete}
+            onClick={() => handleDelete(post?.id as string)}>
+            삭제
+          </div>
           <div className={styles.post__edit}>
             <Link to={`/posts/edit/${post?.id}`}>수정</Link>
           </div>
