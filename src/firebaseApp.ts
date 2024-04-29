@@ -1,5 +1,10 @@
 import { initializeApp, FirebaseApp, getApp } from "firebase/app";
-import { User } from "firebase/auth";
+import {
+  User,
+  createUserWithEmailAndPassword,
+  getAuth,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import {
   addDoc,
   collection,
@@ -30,10 +35,19 @@ try {
 
 // Initialize Firebase
 const firebase = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
 export const db = getFirestore(app);
 
 export default firebase;
+
+export async function createUser(email: string, password: string) {
+  await createUserWithEmailAndPassword(auth, email, password);
+}
+
+export async function login(email: string, password: string) {
+  await signInWithEmailAndPassword(auth, email, password);
+}
 
 export async function createPost(
   title: string,

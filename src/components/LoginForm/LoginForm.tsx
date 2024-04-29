@@ -1,10 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import {
-  createUserWithEmailAndPassword,
-  getAuth,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
-import { app } from "../../firebaseApp";
+import { createUser, login } from "../../firebaseApp";
 import React, { useState } from "react";
 import { LoginFormProps } from "../../typings/auth.types";
 import styles from "./LoginForm.module.css";
@@ -65,14 +60,11 @@ export default function LoginForm({ isSignup }: LoginFormProps) {
     e.preventDefault();
 
     try {
-      const auth = getAuth(app);
-
       if (isSignup) {
-        await createUserWithEmailAndPassword(auth, email, password);
-
+        createUser(email, password);
         navigate("/");
       } else {
-        await signInWithEmailAndPassword(auth, email, password);
+        login(email, password);
         navigate("/");
       }
     } catch (error) {
