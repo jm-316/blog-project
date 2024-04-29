@@ -41,7 +41,11 @@ export default function PostList({ defaultTab = "all" }: PostListProps) {
                 {post?.email === user?.email && (
                   <div className={styles.post__utils__box}>
                     <div className={styles.post__delete}>삭제</div>
-                    <div className={styles.post__edit}>수정</div>
+                    <Link
+                      to={`posts/edit/${post.id}`}
+                      className={styles.post__edit}>
+                      수정
+                    </Link>
                   </div>
                 )}
               </div>
