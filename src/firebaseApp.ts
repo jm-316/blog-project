@@ -1,6 +1,14 @@
 import { initializeApp, FirebaseApp, getApp } from "firebase/app";
 import { User } from "firebase/auth";
-import { addDoc, collection, getFirestore } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getFirestore,
+  updateDoc,
+} from "firebase/firestore";
+import { CategoryType, PostProps } from "./typings/post.types";
 
 export let app: FirebaseApp;
 
@@ -43,5 +51,34 @@ export async function createPost(
     email: user?.email,
     uid: user?.uid,
     category,
+  });
+}
+
+export async function getPost(id: string, callback: (post: PostProps) => void) {
+  if (id) {
+    const docRef = doc(db, "posts", id);
+    const docSnap = await getDoc(docRef);
+
+    callback({ id: docSnap.id, ...(docSnap.data() as PostProps) });
+  }
+}
+
+export async function updatePost(
+  id: string,
+  title: string,
+  content: string,
+  category: CategoryType
+) {
+  const postRef = doc(db, "posts", id);
+
+  await updateDoc(postRef, {
+    title: title,
+    content: content,
+    updatedAt: new Date()?.toLocaleDateString("ko", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    }),
+    category: category,
   });
 }

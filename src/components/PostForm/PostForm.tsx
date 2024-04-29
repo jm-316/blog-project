@@ -1,24 +1,31 @@
-import { useNavigate } from "react-router";
-import { createPost } from "../../firebaseApp";
-import React, { useContext, useState } from "react";
+import { useNavigate, useParams } from "react-router";
+import { createPost, getPost, updatePost } from "../../firebaseApp";
+import React, { useContext, useEffect, useState } from "react";
 import AuthContext from "../../context/AuthContext";
-import { CATEGORIES, CategoryType } from "../../typings/post.types";
+import { CATEGORIES, CategoryType, PostProps } from "../../typings/post.types";
 import styles from "./PostFrom.module.css";
 
 export default function PostForm() {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [category, setCategory] = useState<CategoryType>("자유게시판");
+  const [post, setPost] = useState<PostProps | null>(null);
 
   const { user } = useContext(AuthContext);
 
   const navigate = useNavigate();
+  const params = useParams();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
-      createPost(title, content, category, user);
+      if (post && post?.id) {
+        updatePost(post?.id, title, content, category);
+      } else {
+        createPost(title, content, category, user);
+      }
+
       navigate("/");
     } catch (error) {
       console.log(error);
@@ -41,6 +48,19 @@ export default function PostForm() {
         return setCategory(value as CategoryType);
     }
   };
+
+  useEffect(() => {
+    if (params?.id) getPost(params?.id, setPost);
+  }, [params?.id]);
+
+  useEffect(() => {
+    if (post) {
+      setTitle(post?.title);
+      setContent(post?.content);
+      setCategory(post?.category as CategoryType);
+    }
+  }, [post]);
+
   return (
     <div className={styles.post__wrapper}>
       <h1 className={styles.post__title}>게시글 등록</h1>

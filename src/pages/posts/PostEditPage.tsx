@@ -1,3 +1,5 @@
+import PostForm from "../../components/PostForm/PostForm";
+
 export default function PostEditPage() {
-  return <div>Edit</div>;
+  return <PostForm />;
 }
