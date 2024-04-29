@@ -21,6 +21,7 @@ export interface PostProps {
 }
 
 export interface PostListProps {
+  hasNavigation?: boolean;
   defaultTab?: TabType | CategoryType;
   activeTab?: TabType | CategoryType;
   handleChangeActiveTab?: (tab: CategoryType | TabType) => void;

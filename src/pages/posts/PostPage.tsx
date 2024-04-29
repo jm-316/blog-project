@@ -1,3 +1,5 @@
+import PostList from "../../components/PostList/PostList";
+
 export default function PostPage() {
-  return <div>Post Page</div>;
+  return <PostList hasNavigation={false} />;
 }
