@@ -43,5 +43,5 @@ export default function UseGetPosts(
     fetchPosts();
   }, [activeTab]);
 
-  return posts;
+  return { posts, getPosts: fetchPosts };
 }
