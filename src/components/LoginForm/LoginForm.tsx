@@ -4,9 +4,9 @@ import {
   getAuth,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import React, { useState } from "react";
 import { app } from "../../firebaseApp";
-import { LoginFormProps } from "./LoginForm.types";
+import React, { useState } from "react";
+import { LoginFormProps } from "../../typings/auth.types";
 import styles from "./LoginForm.module.css";
 
 export default function LoginForm({ isSignup }: LoginFormProps) {

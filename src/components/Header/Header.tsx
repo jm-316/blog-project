@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import styles from "./Header.module.css";
+import { app } from "../../firebaseApp";
+import { getAuth, signOut } from "firebase/auth";
 import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
-import { getAuth, signOut } from "firebase/auth";
-import { app } from "../../firebaseApp";
+import styles from "./Header.module.css";
 
 export default function Header() {
   const { user } = useContext(AuthContext);
