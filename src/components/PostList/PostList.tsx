@@ -7,7 +7,10 @@ import UseGetPosts from "../../hooks/UseGetPosts";
 import { CategoryType, PostListProps, TabType } from "../../typings/post.types";
 import styles from "./PostList.module.css";
 
-export default function PostList({ defaultTab = "all" }: PostListProps) {
+export default function PostList({
+  hasNavigation = true,
+  defaultTab = "all",
+}: PostListProps) {
   const [activeTab, setActiveTab] = useState<TabType | CategoryType>(
     defaultTab
   );
@@ -30,10 +33,12 @@ export default function PostList({ defaultTab = "all" }: PostListProps) {
 
   return (
     <>
-      <Category
-        activeTab={activeTab}
-        handleChangeActiveTab={handleChangeActiveTab}
-      />
+      {hasNavigation && (
+        <Category
+          activeTab={activeTab}
+          handleChangeActiveTab={handleChangeActiveTab}
+        />
+      )}
       <div className={styles.post__list}>
         {posts.length > 0 ? (
           posts.map((post) => (
