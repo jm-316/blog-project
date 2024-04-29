@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { deletePost } from "../../firebaseApp";
 import { useContext, useState } from "react";
 import AuthContext from "../../context/AuthContext";
 import Category from "../Category/Category";
@@ -12,10 +13,19 @@ export default function PostList({ defaultTab = "all" }: PostListProps) {
   );
 
   const { user } = useContext(AuthContext);
-  const posts = UseGetPosts(activeTab, user);
+  const { posts, getPosts } = UseGetPosts(activeTab, user);
 
   const handleChangeActiveTab = (tab: TabType | CategoryType) => {
     setActiveTab(tab);
+  };
+
+  const handleDelete = async (id: string) => {
+    const confirm = window.confirm("해당 게시글을 삭제 하시겠습니까?");
+
+    if (confirm && id) {
+      deletePost(id);
+      getPosts();
+    }
   };
 
   return (
@@ -40,7 +50,11 @@ export default function PostList({ defaultTab = "all" }: PostListProps) {
                 </Link>
                 {post?.email === user?.email && (
                   <div className={styles.post__utils__box}>
-                    <div className={styles.post__delete}>삭제</div>
+                    <div
+                      className={styles.post__delete}
+                      onClick={() => handleDelete(post.id as string)}>
+                      삭제
+                    </div>
                     <Link
                       to={`posts/edit/${post.id}`}
                       className={styles.post__edit}>

@@ -3,6 +3,7 @@ import { User } from "firebase/auth";
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getFirestore,
@@ -81,4 +82,8 @@ export async function updatePost(
     }),
     category: category,
   });
+}
+
+export async function deletePost(id: string) {
+  await deleteDoc(doc(db, "posts", id));
 }
