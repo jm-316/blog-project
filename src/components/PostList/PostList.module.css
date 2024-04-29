@@ -71,6 +71,10 @@
   padding: 0 5px;
 }
 
+.post__list .post__edit {
+  color: gray;
+}
+
 .post__delete:focus,
 .post__delete:hover,
 .post__edit:focus,
