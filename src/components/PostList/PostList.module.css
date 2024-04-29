@@ -77,3 +77,12 @@
 .post__edit:hover {
   color: black;
 }
+
+.post__noPost {
+  text-align: center;
+  color: gray;
+  border: 1px solid #2f2f2f;
+  border-radius: 10px;
+  padding: 24px;
+  margin-top: 20px;
+}
