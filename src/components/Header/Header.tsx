@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-import { app } from "../../firebaseApp";
-import { getAuth, signOut } from "firebase/auth";
+import { logout } from "../../firebaseApp";
 import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import styles from "./Header.module.css";
@@ -10,9 +9,7 @@ export default function Header() {
 
   const handleSignOut = async () => {
     try {
-      const auth = getAuth(app);
-
-      await signOut(auth);
+      logout();
     } catch (error) {
       console.log(error);
     }
