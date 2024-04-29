@@ -1,0 +1,76 @@
+.post__wrapper {
+  padding: 10px;
+}
+.post__title {
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 10px;
+  color: #39211d;
+}
+
+.post__form {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 20px;
+  margin-top: 30px;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+}
+
+.post__form input {
+  max-width: 680px;
+  width: 100%;
+  height: 20px;
+  font-size: 16px;
+  padding: 15px 10px;
+  border: 1px solid lightgray;
+  border-radius: 0.3rem;
+}
+
+.post__form textarea {
+  max-width: 680px;
+  min-height: 400px;
+  width: 100%;
+  font-size: 16px;
+  padding: 10px 10px;
+  border: 1px solid lightgray;
+  border-radius: 0.3rem;
+  line-height: 1.5;
+}
+
+.post__form label {
+  display: block;
+  font-weight: 500;
+  font-size: 17px;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+.post__form select {
+  font-size: 15px;
+}
+
+.post__block {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.post__btn {
+  width: 100%;
+  height: 48px;
+  padding: 10px;
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 0.4rem;
+}
+
+.post__btn:hover,
+.post__btn:focus {
+  background-color: #1945a4;
+}

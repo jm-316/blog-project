@@ -1,8 +1,11 @@
 import { useState } from "react";
-import { CategoryType, PostListProps, TabType } from "./Category.types";
+import {
+  CATEGORIES,
+  CategoryType,
+  PostListProps,
+  TabType,
+} from "./Category.types";
 import styles from "./Category.module.css";
-
-const CATEGORIES: CategoryType[] = ["자유게시판", "Frontend", "Backend", "web"];
 
 export default function Category({ defaultTab = "all" }: PostListProps) {
   const [activeTab, setActiveTab] = useState<TabType | CategoryType>(
