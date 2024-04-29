@@ -25,9 +25,6 @@ export default function Header() {
       </Link>
       <nav>
         <Link to="/posts/new">글쓰기</Link>
-        <Link to="/posts" className={styles.nav__link}>
-          게시글
-        </Link>
         {!user ? (
           <Link to="/login" className={styles.nav__link}>
             Login
