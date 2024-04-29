@@ -32,14 +32,6 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "posts",
-        element: (
-          <ProtectedRoute>
-            <PostPage />
-          </ProtectedRoute>
-        ),
-      },
-      {
         path: "posts/:id",
         element: <PostDetailPage />,
       },
