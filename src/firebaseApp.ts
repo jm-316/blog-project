@@ -1,5 +1,6 @@
 import { initializeApp, FirebaseApp, getApp } from "firebase/app";
-import "firebase/auth";
+import { User } from "firebase/auth";
+import { addDoc, collection, getFirestore } from "firebase/firestore";
 
 export let app: FirebaseApp;
 
@@ -21,4 +22,26 @@ try {
 // Initialize Firebase
 const firebase = initializeApp(firebaseConfig);
 
+export const db = getFirestore(app);
+
 export default firebase;
+
+export async function createPost(
+  title: string,
+  content: string,
+  category: string,
+  user: User | null
+) {
+  await addDoc(collection(db, "posts"), {
+    title,
+    content,
+    createdAt: new Date()?.toLocaleDateString("ko", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    }),
+    email: user?.email,
+    uid: user?.uid,
+    category,
+  });
+}
