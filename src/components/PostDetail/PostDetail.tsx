@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import styles from "./PostDetail.module.css";
-import { PostProps } from "../../typings/post.types";
+import { Link } from "react-router-dom";
 import { useNavigate, useParams } from "react-router";
 import { deletePost, getPost } from "../../firebaseApp";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { PostProps } from "../../typings/post.types";
+import styles from "./PostDetail.module.css";
 
 export default function PostDetail() {
   const [post, setPost] = useState<PostProps | null>(null);
