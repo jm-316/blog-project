@@ -69,6 +69,12 @@
   cursor: pointer;
 }
 
+.post__edit a {
+  color: gray;
+  text-decoration: none;
+  font-size: 14px;
+}
+
 .post__delete:focus,
 .post__delete:hover,
 .post__edit:focus,

@@ -3,6 +3,7 @@ import styles from "./PostDetail.module.css";
 import { PostProps } from "../../typings/post.types";
 import { useParams } from "react-router";
 import { getPost } from "../../firebaseApp";
+import { Link } from "react-router-dom";
 
 export default function PostDetail() {
   const [post, setPost] = useState<PostProps | null>(null);
@@ -27,7 +28,9 @@ export default function PostDetail() {
         <div className={styles.post__category}>{post?.category}</div>
         <div className={styles.post__edit__box}>
           <div className={styles.post__delete}>delete</div>
-          <div className={styles.post__edit}>edit</div>
+          <div className={styles.post__edit}>
+            <Link to={`/posts/edit/${post?.id}`}>수정</Link>
+          </div>
         </div>
       </div>
       <div className={`${styles.post__text} ${styles.post__text__preWrap}`}>
