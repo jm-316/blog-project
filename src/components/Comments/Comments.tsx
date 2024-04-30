@@ -1,12 +1,14 @@
+import styles from "./Comments.module.css";
+
 export default function Comments() {
   return (
-    <div>
+    <div className={styles.comments}>
       <form>
-        <div>
+        <div className={styles.form__block}>
           <label>댓글입력</label>
           <textarea />
         </div>
-        <button>입력</button>
+        <button className={styles.comment__btn}>입력</button>
       </form>
     </div>
   );
