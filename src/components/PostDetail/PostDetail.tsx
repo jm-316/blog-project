@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router";
 import { deletePost, getPost } from "../../firebaseApp";
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../context/AuthContext";
+import Comments from "../Comments/Comments";
 import { PostProps } from "../../typings/post.types";
 import styles from "./PostDetail.module.css";
 
@@ -57,6 +58,7 @@ export default function PostDetail() {
       <div className={`${styles.post__text} ${styles.post__text__preWrap}`}>
         {post?.content}
       </div>
+      <Comments />
     </div>
   );
 }
