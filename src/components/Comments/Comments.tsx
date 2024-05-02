@@ -65,6 +65,21 @@ export default function Comments({ post, setPost }: CommentsProps) {
         </div>
         <button className={styles.comment__btn}>입력</button>
       </form>
+      <div>
+        {post?.comments
+          ?.slice(0)
+          ?.reverse()
+          .map((comment) => (
+            <div key={comment.createdAt}>
+              <div>
+                <div>{comment?.email}</div>
+                <div>{comment?.createdAt}</div>
+                {comment.uid === user?.uid && <div>삭제</div>}
+              </div>
+              <div>{comment?.content}</div>
+            </div>
+          ))}
+      </div>
     </div>
   );
 }
