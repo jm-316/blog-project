@@ -8,6 +8,7 @@ import {
 } from "firebase/auth";
 import {
   addDoc,
+  arrayUnion,
   collection,
   deleteDoc,
   doc,
@@ -15,7 +16,11 @@ import {
   getFirestore,
   updateDoc,
 } from "firebase/firestore";
-import { CategoryType, PostProps } from "./typings/post.types";
+import {
+  CategoryType,
+  CommentsInterface,
+  PostProps,
+} from "./typings/post.types";
 
 export let app: FirebaseApp;
 
@@ -105,4 +110,17 @@ export async function updatePost(
 
 export async function deletePost(id: string) {
   await deleteDoc(doc(db, "posts", id));
+}
+
+export async function createComment(id: string, commentObj: CommentsInterface) {
+  const postRef = doc(db, "posts", id);
+
+  await updateDoc(postRef, {
+    comments: arrayUnion(commentObj),
+    updatedAt: new Date()?.toLocaleDateString("ko", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    }),
+  });
 }

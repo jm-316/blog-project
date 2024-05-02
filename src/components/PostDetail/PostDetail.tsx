@@ -58,7 +58,7 @@ export default function PostDetail() {
       <div className={`${styles.post__text} ${styles.post__text__preWrap}`}>
         {post?.content}
       </div>
-      <Comments />
+      <Comments post={post} setPost={setPost} />
     </div>
   );
 }
