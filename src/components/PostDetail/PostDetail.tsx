@@ -1,12 +1,16 @@
 import { Link } from "react-router-dom";
 import { useNavigate, useParams } from "react-router";
 import { deletePost, getPost } from "../../firebaseApp";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import AuthContext from "../../context/AuthContext";
+import Comments from "../Comments/Comments";
 import { PostProps } from "../../typings/post.types";
 import styles from "./PostDetail.module.css";
 
 export default function PostDetail() {
   const [post, setPost] = useState<PostProps | null>(null);
+
+  const { user } = useContext(AuthContext);
 
   const params = useParams();
   const navigate = useNavigate();
@@ -37,19 +41,24 @@ export default function PostDetail() {
       <div className={styles.post__utils__box}>
         <div className={styles.post__category}>{post?.category}</div>
         <div className={styles.post__edit__box}>
-          <div
-            className={styles.post__delete}
-            onClick={() => handleDelete(post?.id as string)}>
-            삭제
-          </div>
-          <div className={styles.post__edit}>
-            <Link to={`/posts/edit/${post?.id}`}>수정</Link>
-          </div>
+          {user && (
+            <>
+              <div
+                className={styles.post__delete}
+                onClick={() => handleDelete(post?.id as string)}>
+                삭제
+              </div>
+              <div className={styles.post__edit}>
+                <Link to={`/posts/edit/${post?.id}`}>수정</Link>
+              </div>
+            </>
+          )}
         </div>
       </div>
       <div className={`${styles.post__text} ${styles.post__text__preWrap}`}>
         {post?.content}
       </div>
+      <Comments post={post} setPost={setPost} />
     </div>
   );
 }

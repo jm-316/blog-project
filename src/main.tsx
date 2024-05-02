@@ -1,11 +1,9 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import ReactDOM from "react-dom/client";
-import React from "react";
 
 import App from "./App.tsx";
 import { AuthContextProvider } from "./context/AuthContext.tsx";
 import Home from "./pages/home/index.tsx";
-import PostPage from "./pages/posts/PostPage.tsx";
 import PostDetailPage from "./pages/posts/PostDetailPage.tsx";
 import PostEditPage from "./pages/posts/PostEditPage.tsx";
 import PostNewPage from "./pages/posts/PostNewPage.tsx";
