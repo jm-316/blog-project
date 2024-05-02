@@ -1,3 +1,5 @@
+import { User } from "firebase/auth";
+
 export const CATEGORIES: CategoryType[] = [
   "자유게시판",
   "Frontend",
@@ -33,4 +35,15 @@ export interface PostListProps {
   defaultTab?: TabType | CategoryType;
   activeTab?: TabType | CategoryType;
   handleChangeActiveTab?: (tab: CategoryType | TabType) => void;
+}
+
+export interface CommentsProps {
+  post: PostProps;
+  setPost: React.Dispatch<React.SetStateAction<PostProps | null>>;
+}
+
+export interface CommentListProps {
+  post: PostProps;
+  user: User | null;
+  handleDeleteComment: (data: CommentsInterface) => void;
 }

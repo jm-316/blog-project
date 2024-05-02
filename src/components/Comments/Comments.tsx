@@ -1,14 +1,9 @@
 import React, { useContext, useState } from "react";
-import { createComment, getPost } from "../../firebaseApp";
+import { createComment, deleteComment, getPost } from "../../firebaseApp";
 import AuthContext from "../../context/AuthContext";
-import { PostProps } from "../../typings/post.types";
-import styles from "./Comments.module.css";
 import CommentList from "../../CommentList/CommentList";
-
-interface CommentsProps {
-  post: PostProps;
-  setPost: React.Dispatch<React.SetStateAction<PostProps | null>>;
-}
+import { CommentsInterface, CommentsProps } from "../../typings/post.types";
+import styles from "./Comments.module.css";
 
 export default function Comments({ post, setPost }: CommentsProps) {
   const [comment, setComment] = useState<string>("");
@@ -52,6 +47,16 @@ export default function Comments({ post, setPost }: CommentsProps) {
       console.log(error);
     }
   };
+
+  const handleDeleteComment = async (data: CommentsInterface) => {
+    const confirm = window.confirm("해당 댓글을 삭제하시겠습니까?");
+
+    if (confirm && post.id) {
+      deleteComment(post.id, data);
+
+      await getPost(post.id, setPost);
+    }
+  };
   return (
     <div className={styles.comments}>
       <form onSubmit={handleSubmit}>
@@ -68,7 +73,11 @@ export default function Comments({ post, setPost }: CommentsProps) {
         <button className={styles.comment__btn}>입력</button>
       </form>
       <div>
-        <CommentList post={post} user={user} />
+        <CommentList
+          post={post}
+          user={user}
+          handleDeleteComment={handleDeleteComment}
+        />
       </div>
     </div>
   );

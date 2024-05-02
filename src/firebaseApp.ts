@@ -8,6 +8,7 @@ import {
 } from "firebase/auth";
 import {
   addDoc,
+  arrayRemove,
   arrayUnion,
   collection,
   deleteDoc,
@@ -122,5 +123,13 @@ export async function createComment(id: string, commentObj: CommentsInterface) {
       minute: "2-digit",
       second: "2-digit",
     }),
+  });
+}
+
+export async function deleteComment(id: string, data: CommentsInterface) {
+  const postRef = doc(db, "posts", id);
+
+  await updateDoc(postRef, {
+    comments: arrayRemove(data),
   });
 }
