@@ -1,8 +1,9 @@
 import React, { useContext, useState } from "react";
-import { createComment } from "../../firebaseApp";
+import { createComment, getPost } from "../../firebaseApp";
 import AuthContext from "../../context/AuthContext";
 import { PostProps } from "../../typings/post.types";
 import styles from "./Comments.module.css";
+import CommentList from "../../CommentList/CommentList";
 
 interface CommentsProps {
   post: PostProps;
@@ -40,6 +41,7 @@ export default function Comments({ post, setPost }: CommentsProps) {
           };
 
           await createComment(post.id, commentObj);
+          await getPost(post.id, setPost);
 
           setComment("");
         } else {
@@ -66,21 +68,7 @@ export default function Comments({ post, setPost }: CommentsProps) {
         <button className={styles.comment__btn}>입력</button>
       </form>
       <div>
-        {post?.comments
-          ?.slice(0)
-          ?.reverse()
-          .map((comment) => (
-            <div key={comment.createdAt} className={styles.comment__box}>
-              <div className={styles.comment__profileBox}>
-                <div className={styles.comment__email}>{comment?.email}</div>
-                <div className={styles.comment__date}>{comment?.createdAt}</div>
-                {comment.uid === user?.uid && (
-                  <div className={styles.comment__delete}>삭제</div>
-                )}
-              </div>
-              <div className={styles.comment__text}>{comment?.content}</div>
-            </div>
-          ))}
+        <CommentList post={post} user={user} />
       </div>
     </div>
   );
