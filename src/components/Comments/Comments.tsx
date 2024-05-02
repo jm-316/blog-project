@@ -52,8 +52,7 @@ export default function Comments({ post, setPost }: CommentsProps) {
     const confirm = window.confirm("해당 댓글을 삭제하시겠습니까?");
 
     if (confirm && post.id) {
-      deleteComment(post.id, data);
-
+      await deleteComment(post.id, data);
       await getPost(post.id, setPost);
     }
   };
