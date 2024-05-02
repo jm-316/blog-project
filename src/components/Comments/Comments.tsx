@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router";
 import React, { useContext, useState } from "react";
 import { createComment, deleteComment, getPost } from "../../firebaseApp";
 import AuthContext from "../../context/AuthContext";
@@ -9,6 +10,8 @@ export default function Comments({ post, setPost }: CommentsProps) {
   const [comment, setComment] = useState<string>("");
 
   const { user } = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -40,7 +43,8 @@ export default function Comments({ post, setPost }: CommentsProps) {
 
           setComment("");
         } else {
-          alert("로그인을 해주세요.");
+          alert("로그인 페이지로 이동합니다.");
+          navigate("/login");
         }
       }
     } catch (error) {
