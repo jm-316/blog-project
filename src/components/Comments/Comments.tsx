@@ -70,13 +70,15 @@ export default function Comments({ post, setPost }: CommentsProps) {
           ?.slice(0)
           ?.reverse()
           .map((comment) => (
-            <div key={comment.createdAt}>
-              <div>
-                <div>{comment?.email}</div>
-                <div>{comment?.createdAt}</div>
-                {comment.uid === user?.uid && <div>삭제</div>}
+            <div key={comment.createdAt} className={styles.comment__box}>
+              <div className={styles.comment__profileBox}>
+                <div className={styles.comment__email}>{comment?.email}</div>
+                <div className={styles.comment__date}>{comment?.createdAt}</div>
+                {comment.uid === user?.uid && (
+                  <div className={styles.comment__delete}>삭제</div>
+                )}
               </div>
-              <div>{comment?.content}</div>
+              <div className={styles.comment__text}>{comment?.content}</div>
             </div>
           ))}
       </div>
