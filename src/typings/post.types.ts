@@ -43,7 +43,7 @@ export interface CommentsProps {
 }
 
 export interface CommentListProps {
-  post: PostProps;
+  post: PostProps | null;
   user: User | null;
   handleDeleteComment: (data: CommentsInterface) => void;
 }
