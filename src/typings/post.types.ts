@@ -38,12 +38,12 @@ export interface PostListProps {
 }
 
 export interface CommentsProps {
-  post: PostProps;
+  post: PostProps | null;
   setPost: React.Dispatch<React.SetStateAction<PostProps | null>>;
 }
 
 export interface CommentListProps {
-  post: PostProps;
+  post: PostProps | null;
   user: User | null;
   handleDeleteComment: (data: CommentsInterface) => void;
 }

@@ -1,21 +1,44 @@
-import { useContext } from "react";
-import styles from "./Profile.module.css";
-import AuthContext from "../../context/AuthContext";
+import { useNavigate } from "react-router";
 import { logout } from "../../firebaseApp";
+import { useContext, useState } from "react";
+import AuthContext from "../../context/AuthContext";
+import Modal from "../../common/Modal/Modal";
+import styles from "./Profile.module.css";
 
 export default function Profile() {
-  const { user } = useContext(AuthContext);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleLogout = async () => {
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
     try {
-      logout();
+      setIsOpen(true);
     } catch (error) {
-      console.log(error);
+      setIsOpen(true);
+      setErrorMessage(`로그아웃을 실패했습니다.
+      다시 시도해주세요.`);
+      navigate("/profile");
     }
+  };
+
+  const handleModalConfirm = async () => {
+    if (!errorMessage || errorMessage?.length < 0) {
+      await logout();
+      navigate("/");
+    }
+    setIsOpen(false);
+    setErrorMessage("");
   };
 
   return (
     <div className={styles.profile__box}>
+      {isOpen && (
+        <Modal onConfirm={handleModalConfirm}>
+          {errorMessage ? errorMessage : "로그아웃 되었습니다."}
+        </Modal>
+      )}
       <div className={styles.flex__box}>
         <div className={styles.profile__image} />
         <div>
