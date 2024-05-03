@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { createUser, login } from "../../firebaseApp";
 import React, { useState } from "react";
+import Modal from "../../common/Modal/Modal";
 import { LoginFormProps } from "../../typings/auth.types";
 import styles from "./LoginForm.module.css";
 
@@ -9,6 +10,8 @@ export default function LoginForm({ isSignup }: LoginFormProps) {
   const [password, setPassword] = useState<string>("");
   const [passwordConfirm, setPasswordConfirm] = useState<string>("");
   const [error, setError] = useState<string>("");
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const navigate = useNavigate();
 
@@ -60,78 +63,99 @@ export default function LoginForm({ isSignup }: LoginFormProps) {
     e.preventDefault();
 
     try {
+      // throw new Error("Simulated Firebase error");
       if (isSignup) {
-        createUser(email, password);
-        navigate("/");
+        await createUser(email, password);
+        setIsOpen(true);
       } else {
-        login(email, password);
-        navigate("/");
+        await login(email, password);
+        setIsOpen(true);
       }
     } catch (error) {
-      console.log(error);
+      setIsOpen(true);
+      setErrorMessage(`로그인에 실패했습니다.
+      다시 시도해주세요.`);
+      navigate("/login");
     }
   };
+
+  const handleModalConfirm = () => {
+    if (!errorMessage || errorMessage?.length < 0) {
+      navigate("/");
+    }
+    setIsOpen(false);
+    setErrorMessage("");
+  };
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
-      <h1 className={styles.form__title}>{isSignup ? "회원가입" : "로그인"}</h1>
-      <div>
-        <label htmlFor="email">이메일</label>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          value={email}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="password">비밀번호</label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          value={password}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      {isSignup && (
+    <div>
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <h1 className={styles.form__title}>
+          {isSignup ? "회원가입" : "로그인"}
+        </h1>
         <div>
-          <label htmlFor="password">비밀번호 확인</label>
+          <label htmlFor="email">이메일</label>
           <input
-            type="password"
-            name="password_confirm"
-            id="password_confirm"
-            value={passwordConfirm}
+            type="email"
+            name="email"
+            id="email"
+            value={email}
             onChange={handleChange}
             required
           />
         </div>
-      )}
-      {error && error.length > 0 && (
-        <div className={styles.form__block}>
-          <div className={styles.form__error}>{error}</div>
+        <div>
+          <label htmlFor="password">비밀번호</label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            value={password}
+            onChange={handleChange}
+            required
+          />
         </div>
+        {isSignup && (
+          <div>
+            <label htmlFor="password">비밀번호 확인</label>
+            <input
+              type="password"
+              name="password_confirm"
+              id="password_confirm"
+              value={passwordConfirm}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        )}
+        {error && error.length > 0 && (
+          <div className={styles.form__block}>
+            <div className={styles.form__error}>{error}</div>
+          </div>
+        )}
+        {isSignup ? (
+          <div className={styles.form__block}>
+            계정이 이미 있으신가요?
+            <Link to="/login" className={styles.form__link}>
+              로그인하기
+            </Link>
+          </div>
+        ) : (
+          <div className={styles.form__block}>
+            계정이 없으신가요?
+            <Link to="/signup" className={styles.form__link}>
+              회원가입하기
+            </Link>
+          </div>
+        )}
+        <button className={styles.form__btn}>
+          {isSignup ? "회원가입" : "로그인"}
+        </button>
+      </form>
+      {isOpen && (
+        <Modal onConfirm={handleModalConfirm}>
+          {errorMessage ? errorMessage : "로그인에 성공했습니다."}
+        </Modal>
       )}
-      {isSignup ? (
-        <div className={styles.form__block}>
-          계정이 이미 있으신가요?
-          <Link to="/login" className={styles.form__link}>
-            로그인하기
-          </Link>
-        </div>
-      ) : (
-        <div className={styles.form__block}>
-          계정이 없으신가요?
-          <Link to="/signup" className={styles.form__link}>
-            회원가입하기
-          </Link>
-        </div>
-      )}
-      <button className={styles.form__btn}>
-        {isSignup ? "회원가입" : "로그인"}
-      </button>
-    </form>
+    </div>
   );
 }

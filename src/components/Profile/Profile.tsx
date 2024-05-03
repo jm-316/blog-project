@@ -12,7 +12,7 @@ export default function Profile() {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handleLogout = async () => {
+  const handleLogout = () => {
     try {
       setIsOpen(true);
     } catch (error) {
