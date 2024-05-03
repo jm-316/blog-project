@@ -23,8 +23,6 @@ export default function Profile() {
     }
   };
 
-  console.log(errorMessage);
-
   const handleModalConfirm = async () => {
     if (!errorMessage || errorMessage?.length < 0) {
       await logout();
