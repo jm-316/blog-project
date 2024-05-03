@@ -38,7 +38,7 @@ export interface PostListProps {
 }
 
 export interface CommentsProps {
-  post: PostProps;
+  post: PostProps | null;
   setPost: React.Dispatch<React.SetStateAction<PostProps | null>>;
 }
 
