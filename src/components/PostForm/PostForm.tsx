@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router";
 import { createPost, getPost, updatePost } from "../../firebaseApp";
 import React, { useContext, useEffect, useState } from "react";
 import AuthContext from "../../context/AuthContext";
+import Modal from "../../common/Modal/Modal";
 import { CATEGORIES, CategoryType, PostProps } from "../../typings/post.types";
 import styles from "./PostFrom.module.css";
 
@@ -10,7 +11,8 @@ export default function PostForm() {
   const [content, setContent] = useState<string>("");
   const [category, setCategory] = useState<CategoryType>("자유게시판");
   const [post, setPost] = useState<PostProps | null>(null);
-
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { user } = useContext(AuthContext);
 
   const navigate = useNavigate();
@@ -25,10 +27,11 @@ export default function PostForm() {
       } else {
         createPost(title, content, category, user);
       }
-
-      navigate("/");
+      setIsOpen(true);
     } catch (error) {
-      console.log(error);
+      setIsOpen(true);
+      setErrorMessage(`게시물 등록할 수 없습니다.
+      다시 시도해주세요.`);
     }
   };
 
@@ -61,6 +64,12 @@ export default function PostForm() {
     }
   }, [post]);
 
+  const handleModalConfirm = () => {
+    setIsOpen(false);
+    navigate("/");
+  };
+
+  console.log(errorMessage);
   return (
     <div className={styles.post__wrapper}>
       <h1 className={styles.post__title}>게시글 등록</h1>
@@ -102,6 +111,11 @@ export default function PostForm() {
         </div>
         <button className={styles.post__btn}>제출</button>
       </form>
+      {isOpen && (
+        <Modal onConfirm={handleModalConfirm}>
+          {errorMessage ? errorMessage : "게시물이 등록되었습니다."}
+        </Modal>
+      )}
     </div>
   );
 }
