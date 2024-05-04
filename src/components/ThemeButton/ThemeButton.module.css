@@ -1,0 +1,11 @@
+.theme__btn {
+  width: 40px;
+  height: 40px;
+  position: fixed;
+  right: 50px;
+  bottom: 30px;
+  border-radius: 50%;
+  border: none;
+  background: #fbde4a;
+  cursor: pointer;
+}
