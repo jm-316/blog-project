@@ -36,7 +36,7 @@
 
 .post__author__email,
 .post__date {
-  color: gray;
+  color: var(--utils);
 }
 
 .post__title {
@@ -47,14 +47,14 @@
 
 .post__text {
   height: 100px;
-  color: dimgray;
+  color: var(--title);
   font-size: 14px;
   overflow: hidden;
 }
 
 .post__list a {
   text-decoration: none;
-  color: black;
+  color: var(--title);
 }
 
 .post__utils__box {
@@ -62,7 +62,7 @@
   justify-content: space-around;
   align-items: center;
   font-size: 13px;
-  color: gray;
+  color: var(--utils);
 }
 
 .post__delete,
@@ -72,20 +72,20 @@
 }
 
 .post__list .post__edit {
-  color: gray;
+  color: var(--utils);
 }
 
 .post__delete:focus,
 .post__delete:hover,
 .post__edit:focus,
 .post__edit:hover {
-  color: black;
+  color: var(--hover);
 }
 
 .post__noPost {
   text-align: center;
-  color: gray;
-  border: 1px solid #2f2f2f;
+  color: var(--utils);
+  border: 1px solid var(--utils);
   border-radius: 10px;
   padding: 24px;
   margin-top: 20px;

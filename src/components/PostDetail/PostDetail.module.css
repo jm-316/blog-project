@@ -17,6 +17,7 @@
   line-height: 40px;
   font-weight: 600;
   margin: 14px 0;
+  color: var(--title);
 }
 
 .post__profile__box {
@@ -36,7 +37,7 @@
 
 .post__author__email,
 .post__date {
-  color: gray;
+  color: var(--utils);
 }
 
 .post__utils__box {
@@ -44,7 +45,7 @@
   justify-content: space-between;
   gap: 8px;
   font-size: 14px;
-  color: gray;
+  color: gary;
   padding: 10px 0px;
   border-top: 1px solid #f2f2f2;
   border-bottom: 1px solid #f2f2f2;
@@ -63,28 +64,30 @@
   width: 13%;
   display: flex;
   justify-content: space-around;
+  color: var(--utils);
 }
+
 .post__delete,
 .post__edit {
   cursor: pointer;
 }
 
 .post__edit a {
-  color: gray;
+  color: var(--utils);
   text-decoration: none;
   font-size: 14px;
 }
 
 .post__delete:focus,
 .post__delete:hover,
-.post__edit:focus,
-.post__edit:hover {
-  color: black;
+.post__edit a:focus,
+.post__edit a:hover {
+  color: var(--hover);
 }
 
 .post__text {
   min-height: 200px;
-  color: #39211d;
+  color: var(--content);
   font-size: 17px;
   padding: 20px 0px;
   border-bottom: 1px solid lightgray;

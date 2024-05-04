@@ -9,6 +9,7 @@
 .form__title {
   text-align: center;
   margin-bottom: 40px;
+  color: var(--title);
 }
 
 .form label {
@@ -31,17 +32,18 @@
 .form__block {
   margin-top: 20px;
   width: 100%;
+  color: var(--title);
 }
 
 .form__link {
   text-decoration: none;
-  color: gray;
+  color: var(--utils);
   margin-left: 10px;
 }
 
 .form__link:hover,
 .form__link:focus {
-  color: black;
+  color: var(--hover);
 }
 
 .form__btn {
@@ -64,5 +66,5 @@
 }
 
 .form__error {
-  color: red;
+  color: var(--error);
 }

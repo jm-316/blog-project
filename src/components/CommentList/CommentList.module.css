@@ -12,24 +12,26 @@
 
 .comment__email {
   font-weight: 500;
+  color: var(--utils);
 }
 
 .comment__delete {
-  color: gray;
+  color: var(--utils);
   font-size: 12px;
   cursor: pointer;
 }
 
 .comment__delete:hover,
 .comment__delete:focus {
-  color: black;
+  color: var(--hover);
 }
 
 .comment__date {
-  color: gray;
+  color: var(--utils);
 }
 
 .comment__text {
   font-size: 14px;
   padding-top: 5px;
+  color: var(--hover);
 }
