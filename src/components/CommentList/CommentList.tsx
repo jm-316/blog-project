@@ -1,4 +1,4 @@
-import { CommentListProps } from "../typings/post.types";
+import { CommentListProps } from "../../typings/post.types";
 import styles from "./CommentList.module.css";
 
 export default function CommentList({

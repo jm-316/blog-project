@@ -1,4 +1,28 @@
+:root {
+  --title: black;
+  --utils: gray;
+  --content: dimgray;
+  --hover: black;
+  --error: red;
+}
+
 * {
   box-sizing: border-box;
   margin: 0px;
+}
+
+.white {
+  transition: all 0.25s linear;
+  background-color: white;
+}
+
+.dark {
+  transition: all 0.25s linear;
+  background-color: #1e2937;
+  min-height: 100vh;
+  --title: white;
+  --utils: white;
+  --content: white;
+  --hover: lightgray;
+  --error: #ff6a71;
 }

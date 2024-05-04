@@ -2,7 +2,7 @@ import { useNavigate } from "react-router";
 import React, { useContext, useState } from "react";
 import { createComment, deleteComment, getPost } from "../../firebaseApp";
 import AuthContext from "../../context/AuthContext";
-import CommentList from "../../CommentList/CommentList";
+import CommentList from "../CommentList/CommentList";
 import Modal from "../../common/Modal/Modal";
 import { CommentsInterface, CommentsProps } from "../../typings/post.types";
 import styles from "./Comments.module.css";

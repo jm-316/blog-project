@@ -8,6 +8,7 @@ label {
   margin-top: 20px;
   margin-bottom: 10px;
   font-weight: 600;
+  color: var(--title);
 }
 
 .form__block {

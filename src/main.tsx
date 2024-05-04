@@ -2,6 +2,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import ReactDOM from "react-dom/client";
 
 import App from "./App.tsx";
+import { ThemeContextProvider } from "./context/ThemeContext.tsx";
 import { AuthContextProvider } from "./context/AuthContext.tsx";
 import Home from "./pages/home/index.tsx";
 import PostDetailPage from "./pages/posts/PostDetailPage.tsx";
@@ -56,7 +57,9 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <AuthContextProvider>
-    <RouterProvider router={router} />
-  </AuthContextProvider>
+  <ThemeContextProvider>
+    <AuthContextProvider>
+      <RouterProvider router={router} />
+    </AuthContextProvider>
+  </ThemeContextProvider>
 );
