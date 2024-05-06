@@ -29,9 +29,8 @@ export default function Router() {
           </ProtectedRoute>
         }
       />
-      <Route path="/posts/edit/:id" element={<Home />} />
       <Route
-        path="/"
+        path="/posts/edit/:id"
         element={
           <ProtectedRoute>
             <PostEditPage />
