@@ -1,5 +1,6 @@
 {
   "name": "blog-project",
+  "homepage": "https://myblog316.netlify.app/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
