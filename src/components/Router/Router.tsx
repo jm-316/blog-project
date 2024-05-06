@@ -22,18 +22,18 @@ export default function Router() {
       />
       <Route path="/posts/:id" element={<PostDetailPage />} />
       <Route
-        path="/posts/new"
-        element={
-          <ProtectedRoute>
-            <PostNewPage />
-          </ProtectedRoute>
-        }
-      />
-      <Route
         path="/posts/edit/:id"
         element={
           <ProtectedRoute>
             <PostEditPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/posts/new"
+        element={
+          <ProtectedRoute>
+            <PostNewPage />
           </ProtectedRoute>
         }
       />
