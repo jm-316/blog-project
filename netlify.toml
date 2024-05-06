@@ -1,4 +1,4 @@
 [[redirects]]
 from = "/*"
-to = "https://myblog316.netlify.app/"
+to = "index.html"
 status = 200
