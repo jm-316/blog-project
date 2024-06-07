@@ -1,30 +1,37 @@
-# React + TypeScript + Vite
+# My Blog
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**배포 링크**: [https://jwitter-mauve.vercel.app](https://myblog316.netlify.app/)
 
-Currently, two official plugins are available:
+## 프로젝트 소개
+My Blog는 리액트의 기본 기능만을 이용해서 만든 블로그 프로젝트입니다. 사용자는 게시글을 작성하고, 카테고리별로 게시글을 분류하며, 다크모드 전환 등의 기능을 제공합니다.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 사용 기술
+- **Frontend**: React, TypeScript, React-Router-DOM, SCSS
+- **Backend**: Firebase
+- **Build**: Vite
+- **Deploy**: Netlify
 
-## Expanding the ESLint configuration
+## 기능 소개
+- **게시글 작성**: 제목과 내용을 입력할 수 있으며, 4개의 카테고리 중 하나를 선택할 수 있습니다. 게시글에는 댓글을 달 수 있습니다.
+- **카테고리화**: 게시글 작성 시 선택한 카테고리별로 글을 분류하고 확인할 수 있습니다.
+- **마이페이지**: 사용자가 작성한 게시글만 모아볼 수 있습니다.
+- **다크모드**: 하단의 버튼을 클릭하여 다크모드로 전환할 수 있습니다.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 실행 화면
+  https://github.com/jm-316/blog-project/assets/130331748/80d451f6-d278-4cbd-9651-97abec1a53a5
 
-- Configure the top-level `parserOptions` property like this:
+## 프로젝트 후기 및 도전 과제
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+이번 블로그 프로젝트에서는 리액트와 CSS의 기본 기능들을 최대한 활용해 보는 것을 목표로 했습니다. 리액트의 경우 상태 관리를 위해 다양한 라이브러리가 있지만, Auth 관리를 Context API만으로 해결할 수 있음을 깨달았습니다. 또한, 프론트엔드 개발자로서 기본적인 CSS 역량을 키우기 위해 다른 라이브러리를 사용하지 않고 모듈 형식으로 CSS를 작성했습니다.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### 도전 과제
+
+#### 타입스크립트 도입
+타입스크립트를 처음 사용하다 보니 타입 정의에서 많은 어려움을 겪었습니다. 이전에는 props를 전달할 때나 이벤트 함수를 만들 때 데이터 타입을 크게 신경 쓰지 않았지만, 타입스크립트를 사용하면서 데이터의 타입을 명확하게 정의하는 것이 필요했습니다.
+
+### 문제 해결 방법
+이 문제들을 해결하기 위해 구글 검색과 타입스크립트 공식 문서를 참고했습니다. 예를 들어, 컴포넌트에 props를 전달할 때 인터페이스를 사용하여 타입을 정의하고, 함수의 인자와 반환 값에 대한 타입을 명확하게 지정했습니다. 이러한 과정을 통해 명확한 타입 정의의 중요성을 깨닫고, 타입 정의를 통해 에러가 감소할 수 있음을 배웠습니다.
+
+### 배운 점
+이번 프로젝트를 통해 타입스크립트의 중요성과 CSS 모듈의 활용 방법을 깊이 있게 이해할 수 있었습니다. 앞으로도 이러한 경험을 바탕으로 더욱 완성도 높은 프로젝트를 만들어가고 싶습니다.
+
