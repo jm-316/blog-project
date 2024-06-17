@@ -6,7 +6,7 @@
 My Blog는 리액트의 기본 기능만을 이용해서 만든 블로그 프로젝트입니다. 사용자는 게시글을 작성하고, 카테고리별로 게시글을 분류하며, 다크모드 전환 등의 기능을 제공합니다.
 
 ## 사용 기술
-- **Frontend**: React, TypeScript, React-Router-DOM, SCSS
+- **Frontend**: React, TypeScript, React-Router-DOM, CSS
 - **Backend**: Firebase
 - **Build**: Vite
 - **Deploy**: Netlify
