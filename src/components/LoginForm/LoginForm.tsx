@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
-import { createUser, login } from "../../firebaseApp";
 import React, { useState } from "react";
 import Modal from "../../common/Modal/Modal";
+import { useUser } from "../../hooks/useUser";
 import { LoginFormProps } from "../../typings/auth.types";
 import styles from "./LoginForm.module.css";
 
@@ -14,6 +14,8 @@ export default function LoginForm({ isSignup }: LoginFormProps) {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const navigate = useNavigate();
+
+  const { newUser: createUser, loginUser: login } = useUser();
 
   const emailRegex =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -65,10 +67,10 @@ export default function LoginForm({ isSignup }: LoginFormProps) {
     try {
       // throw new Error("Simulated Firebase error");
       if (isSignup) {
-        await createUser(email, password);
+        createUser.mutate({ email, password });
         setIsOpen(true);
       } else {
-        await login(email, password);
+        login.mutate({ email, password });
         setIsOpen(true);
       }
     } catch (error) {

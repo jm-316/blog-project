@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router";
-import { logout } from "../../firebaseApp";
 import { useContext, useState } from "react";
 import AuthContext from "../../context/AuthContext";
 import Modal from "../../common/Modal/Modal";
+import { useUser } from "../../hooks/useUser";
 import styles from "./Profile.module.css";
 
 export default function Profile() {
@@ -11,6 +11,8 @@ export default function Profile() {
 
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  const { logoutUser: logout } = useUser();
 
   const handleLogout = () => {
     try {
@@ -25,7 +27,7 @@ export default function Profile() {
 
   const handleModalConfirm = async () => {
     if (!errorMessage || errorMessage?.length < 0) {
-      await logout();
+      logout.mutate();
       navigate("/");
     }
     setIsOpen(false);
