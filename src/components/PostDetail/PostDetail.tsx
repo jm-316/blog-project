@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router";
 import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import Comments from "../Comments/Comments";
+import Loader from "../../common/Loader/Loader";
 import { usePost } from "../../hooks/usePost";
 import styles from "./PostDetail.module.css";
 
@@ -27,7 +28,7 @@ export default function PostDetail() {
     }
   };
 
-  if (isLoading) <div>Loading</div>;
+  if (isLoading) return <Loader />;
 
   return (
     <div className={styles.post__detail}>

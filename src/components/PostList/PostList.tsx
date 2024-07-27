@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 import { useContext, useState } from "react";
 import AuthContext from "../../context/AuthContext";
 import Category from "../Category/Category";
+import Loader from "../../common/Loader/Loader";
 import { usePost } from "../../hooks/usePost";
 import { CategoryType, PostListProps, TabType } from "../../typings/post.types";
 import styles from "./PostList.module.css";
@@ -38,9 +39,7 @@ export default function PostList({
     }
   };
 
-  if (isLoading) {
-    return <div>Loading</div>;
-  }
+  if (isLoading) return <Loader />;
 
   return (
     <>
