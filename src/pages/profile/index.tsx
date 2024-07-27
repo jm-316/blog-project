@@ -4,7 +4,7 @@ import Profile from "../../components/Profile/Profile";
 export default function ProfilePage() {
   return (
     <>
-      <Profile />;
+      <Profile />
       <PostList hasNavigation={false} defaultTab="my" />
     </>
   );
