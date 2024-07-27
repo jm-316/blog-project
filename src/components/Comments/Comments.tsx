@@ -1,20 +1,25 @@
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import React, { useContext, useState } from "react";
-import { createComment, deleteComment, getPost } from "../../firebaseApp";
 import AuthContext from "../../context/AuthContext";
 import CommentList from "../CommentList/CommentList";
 import Modal from "../../common/Modal/Modal";
-import { CommentsInterface, CommentsProps } from "../../typings/post.types";
+import { usePost } from "../../hooks/usePost";
+import { useComment } from "../../hooks/useComment";
+import { CommentsInterface } from "../../typings/post.types";
 import styles from "./Comments.module.css";
 
-export default function Comments({ post, setPost }: CommentsProps) {
+export default function Comments() {
   const [comment, setComment] = useState<string>("");
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const { user } = useContext(AuthContext);
 
+  const params = useParams();
   const navigate = useNavigate();
+
+  const { post, refetchPost } = usePost(params.id as string);
+  const { addComment, removeComment } = useComment(params?.id as string);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -43,8 +48,9 @@ export default function Comments({ post, setPost }: CommentsProps) {
             }),
           };
 
-          await createComment(post.id, commentObj);
+          addComment.mutate(commentObj);
 
+          refetchPost();
           setIsOpen(true);
           setComment("");
         }
@@ -59,9 +65,9 @@ export default function Comments({ post, setPost }: CommentsProps) {
   const handleDeleteComment = async (data: CommentsInterface) => {
     const confirm = window.confirm("해당 댓글을 삭제하시겠습니까?");
 
-    if (confirm && post && post.id) {
-      await deleteComment(post.id, data);
-      await getPost(post.id, setPost);
+    if (confirm) {
+      removeComment.mutate({ comment: data });
+      refetchPost();
     }
   };
 
@@ -69,9 +75,7 @@ export default function Comments({ post, setPost }: CommentsProps) {
     if (!user) {
       navigate("/login");
     }
-    if (post && post.id && (!errorMessage || errorMessage?.length < 0)) {
-      await getPost(post.id, setPost);
-    }
+
     setIsOpen(false);
     setErrorMessage("");
   };
@@ -101,11 +105,13 @@ export default function Comments({ post, setPost }: CommentsProps) {
         <button className={styles.comment__btn}>입력</button>
       </form>
       <div>
-        <CommentList
-          post={post}
-          user={user}
-          handleDeleteComment={handleDeleteComment}
-        />
+        {post && (
+          <CommentList
+            post={post}
+            user={user}
+            handleDeleteComment={handleDeleteComment}
+          />
+        )}
       </div>
     </div>
   );

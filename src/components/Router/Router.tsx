@@ -30,6 +30,14 @@ export default function Router() {
         }
       />
       <Route
+        path="/profile/posts/edit/:id"
+        element={
+          <ProtectedRoute>
+            <PostEditPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
         path="/posts/new"
         element={
           <ProtectedRoute>

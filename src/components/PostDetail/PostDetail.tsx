@@ -1,32 +1,33 @@
 import { Link } from "react-router-dom";
 import { useNavigate, useParams } from "react-router";
-import { deletePost, getPost } from "../../firebaseApp";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import Comments from "../Comments/Comments";
-import { PostProps } from "../../typings/post.types";
+import { usePost } from "../../hooks/usePost";
 import styles from "./PostDetail.module.css";
 
 export default function PostDetail() {
-  const [post, setPost] = useState<PostProps | null>(null);
-
   const { user } = useContext(AuthContext);
 
   const params = useParams();
   const navigate = useNavigate();
 
+  const {
+    post,
+    removePost: deletePost,
+    isLoading,
+  } = usePost(params.id as string);
+
   const handleDelete = async (id: string) => {
     const confirm = window.confirm("해당 게시글을 삭제 하시겠습니까?");
 
     if (confirm && id) {
-      deletePost(id);
+      deletePost.mutate(id);
       navigate("/");
     }
   };
 
-  useEffect(() => {
-    if (params?.id) getPost(params?.id, setPost);
-  }, [params?.id]);
+  if (isLoading) <div>Loading</div>;
 
   return (
     <div className={styles.post__detail}>
@@ -58,7 +59,7 @@ export default function PostDetail() {
       <div className={`${styles.post__text} ${styles.post__text__preWrap}`}>
         {post?.content}
       </div>
-      <Comments post={post} setPost={setPost} />
+      <Comments />
     </div>
   );
 }
