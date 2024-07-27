@@ -14,13 +14,18 @@ import {
   deleteDoc,
   doc,
   getDoc,
+  getDocs,
   getFirestore,
+  orderBy,
+  query,
   updateDoc,
+  where,
 } from "firebase/firestore";
 import {
   CategoryType,
   CommentsInterface,
   PostProps,
+  TabType,
 } from "./typings/post.types";
 
 export let app: FirebaseApp;
@@ -48,24 +53,41 @@ export const db = getFirestore(app);
 
 export default firebase;
 
-export async function createUser(email: string, password: string) {
+export async function createUser({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}): Promise<void> {
   await createUserWithEmailAndPassword(auth, email, password);
 }
 
-export async function login(email: string, password: string) {
+export async function login({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}): Promise<void> {
   await signInWithEmailAndPassword(auth, email, password);
 }
 
-export async function logout() {
+export async function logout(): Promise<void> {
   await signOut(auth);
 }
 
-export async function createPost(
-  title: string,
-  content: string,
-  category: string,
-  user: User | null
-) {
+export async function createPost({
+  title,
+  content,
+  category,
+  user,
+}: {
+  title: string;
+  content: string;
+  category: string;
+  user: User | null;
+}): Promise<void> {
   await addDoc(collection(db, "posts"), {
     title,
     content,
@@ -80,21 +102,58 @@ export async function createPost(
   });
 }
 
-export async function getPost(id: string, callback: (post: PostProps) => void) {
-  if (id) {
-    const docRef = doc(db, "posts", id);
-    const docSnap = await getDoc(docRef);
+export async function getPosts(
+  activeTab: TabType | CategoryType,
+  user: User | null
+): Promise<PostProps[]> {
+  const postRef = collection(db, "posts");
+  let postQuery;
 
-    callback({ id: docSnap.id, ...(docSnap.data() as PostProps) });
+  if (activeTab === "my" && user) {
+    postQuery = query(
+      postRef,
+      where("uid", "==", user.uid),
+      orderBy("createdAt", "asc")
+    );
+  } else if (activeTab === "all") {
+    postQuery = query(postRef, orderBy("createdAt", "asc"));
+  } else {
+    postQuery = query(
+      postRef,
+      where("category", "==", activeTab),
+      orderBy("createdAt", "asc")
+    );
   }
+
+  const datas = await getDocs(postQuery);
+  const posts: PostProps[] = [];
+
+  datas?.forEach((data) => {
+    const dataObj = { ...data.data(), id: data.id } as PostProps;
+    posts.push(dataObj);
+  });
+
+  return posts;
 }
 
-export async function updatePost(
-  id: string,
-  title: string,
-  content: string,
-  category: CategoryType
-) {
+export async function getPost(id: string): Promise<PostProps> {
+  const docRef = doc(db, "posts", id);
+  const docSnap = await getDoc(docRef);
+
+  return { id: docSnap.id, ...(docSnap.data() as PostProps) };
+}
+
+export async function updatePost({
+  id,
+  title,
+  content,
+  category,
+}: {
+  id: string;
+  title: string;
+  content: string;
+  category: CategoryType;
+}): Promise<void> {
   const postRef = doc(db, "posts", id);
 
   await updateDoc(postRef, {
@@ -109,11 +168,14 @@ export async function updatePost(
   });
 }
 
-export async function deletePost(id: string) {
+export async function deletePost(id: string): Promise<void> {
   await deleteDoc(doc(db, "posts", id));
 }
 
-export async function createComment(id: string, commentObj: CommentsInterface) {
+export async function createComment(
+  id: string,
+  commentObj: CommentsInterface
+): Promise<void> {
   const postRef = doc(db, "posts", id);
 
   await updateDoc(postRef, {
@@ -126,7 +188,10 @@ export async function createComment(id: string, commentObj: CommentsInterface) {
   });
 }
 
-export async function deleteComment(id: string, data: CommentsInterface) {
+export async function deleteComment(
+  id: string,
+  data: CommentsInterface
+): Promise<void> {
   const postRef = doc(db, "posts", id);
 
   await updateDoc(postRef, {
