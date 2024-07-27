@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import { deletePost } from "../../firebaseApp";
+import { useParams } from "react-router";
 import { useContext, useState } from "react";
 import AuthContext from "../../context/AuthContext";
 import Category from "../Category/Category";
-import UseGetPosts from "../../hooks/UseGetPosts";
+import { usePost } from "../../hooks/usePost";
 import { CategoryType, PostListProps, TabType } from "../../typings/post.types";
 import styles from "./PostList.module.css";
 
@@ -16,7 +16,14 @@ export default function PostList({
   );
 
   const { user } = useContext(AuthContext);
-  const { posts, getPosts } = UseGetPosts(activeTab, user);
+  const params = useParams();
+
+  const {
+    posts,
+    removePost: deletePost,
+    isLoading,
+    refetchPosts,
+  } = usePost(params.id as string, activeTab, user);
 
   const handleChangeActiveTab = (tab: TabType | CategoryType) => {
     setActiveTab(tab);
@@ -26,10 +33,14 @@ export default function PostList({
     const confirm = window.confirm("해당 게시글을 삭제 하시겠습니까?");
 
     if (confirm && id) {
-      deletePost(id);
-      getPosts();
+      deletePost.mutate(id);
+      refetchPosts();
     }
   };
+
+  if (isLoading) {
+    return <div>Loading</div>;
+  }
 
   return (
     <>
@@ -40,7 +51,7 @@ export default function PostList({
         />
       )}
       <div className={styles.post__list}>
-        {posts.length > 0 ? (
+        {posts && posts.length > 0 ? (
           posts.map((post) => (
             <div className={styles.post__box} key={post?.id}>
               <div className={styles.post__box__header}>

@@ -1,16 +1,15 @@
 import { useNavigate, useParams } from "react-router";
-import { createPost, getPost, updatePost } from "../../firebaseApp";
 import React, { useContext, useEffect, useState } from "react";
 import AuthContext from "../../context/AuthContext";
 import Modal from "../../common/Modal/Modal";
-import { CATEGORIES, CategoryType, PostProps } from "../../typings/post.types";
+import { usePost } from "../../hooks/usePost";
+import { CATEGORIES, CategoryType } from "../../typings/post.types";
 import styles from "./PostFrom.module.css";
 
 export default function PostForm() {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [category, setCategory] = useState<CategoryType>("자유게시판");
-  const [post, setPost] = useState<PostProps | null>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { user } = useContext(AuthContext);
@@ -18,14 +17,20 @@ export default function PostForm() {
   const navigate = useNavigate();
   const params = useParams();
 
+  const {
+    post,
+    newPost: createPost,
+    addPost: updatePost,
+  } = usePost(params.id as string, null, user);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
       if (post && post?.id) {
-        updatePost(post?.id, title, content, category);
+        updatePost.mutate({ id: post?.id, title, content, category });
       } else {
-        createPost(title, content, category, user);
+        createPost.mutate({ title, content, category, user });
       }
       setIsOpen(true);
     } catch (error) {
@@ -53,10 +58,6 @@ export default function PostForm() {
   };
 
   useEffect(() => {
-    if (params?.id) getPost(params?.id, setPost);
-  }, [params?.id]);
-
-  useEffect(() => {
     if (post) {
       setTitle(post?.title);
       setContent(post?.content);
@@ -69,7 +70,6 @@ export default function PostForm() {
     navigate("/");
   };
 
-  console.log(errorMessage);
   return (
     <div className={styles.post__wrapper}>
       <h1 className={styles.post__title}>게시글 등록</h1>
