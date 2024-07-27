@@ -1,4 +1,6 @@
 import { BrowserRouter as Router } from "react-router-dom";
+import { QueryClientProvider, useQueryClient } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import { ThemeContextProvider } from "./context/ThemeContext.tsx";
@@ -9,12 +11,17 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
+const queryClient = useQueryClient();
+
 root.render(
   <ThemeContextProvider>
-    <AuthContextProvider>
-      <Router>
-        <App />
-      </Router>
-    </AuthContextProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthContextProvider>
+        <Router>
+          <App />
+        </Router>
+      </AuthContextProvider>
+      <ReactQueryDevtools />
+    </QueryClientProvider>
   </ThemeContextProvider>
 );
