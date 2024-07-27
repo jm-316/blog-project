@@ -1,0 +1,21 @@
+.loader__container {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 10rem;
+}
+.loader {
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: #6b7280;
+  border-radius: 50%;
+  animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes ping {
+  75%,
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
