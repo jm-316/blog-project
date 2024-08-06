@@ -1,6 +1,6 @@
 # My Blog
 
-**배포 링크**: [https://jwitter-mauve.vercel.app](https://myblog316.netlify.app/)
+**배포 링크**: [https://myblog316.netlify.app](https://myblog316.netlify.app/)
 
 ## 프로젝트 소개
 My Blog는 리액트와 Firebase를 사용해서 만든 블로그 프로젝트입니다.
