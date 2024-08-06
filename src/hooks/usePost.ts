@@ -11,8 +11,8 @@ import { CategoryType, TabType } from "../typings/post.types";
 
 export function usePost(
   id?: string,
-  activeTab?: TabType | CategoryType,
-  user?: User
+  activeTab?: TabType | CategoryType | null,
+  user?: User | null
 ) {
   const queryClient = useQueryClient();
 
