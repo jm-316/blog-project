@@ -3,7 +3,7 @@
 **배포 링크**: [https://jwitter-mauve.vercel.app](https://myblog316.netlify.app/)
 
 ## 프로젝트 소개
-My Blog는 마이 블로그는 리액트와 Firebase를 사용해서 만든 블로그 프로젝트입니다.
+My Blog는 리액트와 Firebase를 사용해서 만든 블로그 프로젝트입니다.
 
 ## 사용 기술
 - **Frontend**: React, TypeScript, React-Query, React-Router-DOM, CSS
