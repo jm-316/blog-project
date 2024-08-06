@@ -1,4 +1,4 @@
-import { useMutation, useQueries, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { User } from "firebase/auth";
 import {
   createPost,
@@ -11,29 +11,27 @@ import { CategoryType, TabType } from "../typings/post.types";
 
 export function usePost(
   id?: string,
-  activeTab?: TabType | CategoryType | null,
-  user?: User | null
+  activeTab?: TabType | CategoryType,
+  user?: User
 ) {
   const queryClient = useQueryClient();
-  const queries = useQueries({
-    queries: [
-      {
-        enabled: !!activeTab && !!user,
-        queryKey: ["posts", activeTab],
-        queryFn: () => {
-          if (activeTab && user) {
-            return getPosts(activeTab, user);
-          }
-        },
-      },
-      {
-        enabled: !!id,
-        queryKey: ["post", id],
-        queryFn: () => {
-          if (id) return getPost(id);
-        },
-      },
-    ],
+
+  const postsQuery = useQuery({
+    enabled: !!activeTab,
+    queryKey: ["posts", activeTab],
+    queryFn: () => {
+      if (activeTab !== null && activeTab !== undefined) {
+        return getPosts(activeTab, user ?? null);
+      }
+    },
+  });
+
+  const postQuery = useQuery({
+    enabled: !!id,
+    queryKey: ["post", id],
+    queryFn: () => {
+      if (id) return getPost(id);
+    },
   });
 
   const newPost = useMutation({
@@ -64,22 +62,12 @@ export function usePost(
     mutationFn: (id: string) => deletePost(id),
   });
 
-  const posts = queries[0].data;
-  const post = queries[1].data;
-
-  const isLoadingPosts = queries[0].isLoading;
-  const isLoadingPost = queries[1].isLoading;
-  const isLoading = isLoadingPosts || isLoadingPost;
-
-  const refetchPosts = queries[0].refetch;
-  const refetchPost = queries[1].refetch;
-
   return {
-    posts,
-    post,
-    isLoading,
-    refetchPost,
-    refetchPosts,
+    posts: postsQuery.data,
+    post: postQuery.data,
+    isLoading: postsQuery.isLoading || postQuery.isLoading,
+    refetchPosts: postsQuery.refetch,
+    refetchPost: postQuery.refetch,
     newPost,
     addPost,
     removePost,
